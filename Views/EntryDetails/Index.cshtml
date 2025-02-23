@@ -154,27 +154,27 @@
             <div style="display: flex; flex-direction: column; gap: 5px;">
                 <div style="display: flex; align-items: center;">
                     <span></span>
-                    <input type="text" name="Y1" id="Y1" style="margin-left: 10px;" oninput="calculateValues()" />
+                    <input type="text" name="Y1" id="Y1" style="margin-left: 10px;" oninput="YTextBoxClick()" />
                 </div>
                 <div style="display: flex; align-items: center;">
                     <span></span>
-                    <input type="text" name="Y2" id="Y2" style="margin-left: 10px;" oninput="calculateValues()" />
+                    <input type="text" name="Y2" id="Y2" style="margin-left: 10px;" oninput="YTextBoxClick()" />
                 </div>
                 <div style="display: flex; align-items: center;">
                     <span></span>
-                    <input type="text" name="Y3" id="Y3" style="margin-left: 10px;" oninput="calculateValues()" />
+                    <input type="text" name="Y3" id="Y3" style="margin-left: 10px;" oninput="YTextBoxClick()" />
                 </div>
                 <div style="display: flex; align-items: center;">
                     <span></span>
-                    <input type="text" name="Y4" id="Y4" style="margin-left: 10px;" oninput="calculateValues()" />
+                    <input type="text" name="Y4" id="Y4" style="margin-left: 10px;" oninput="YTextBoxClick()" />
                 </div>
                 <div style="display: flex; align-items: center;">
                     <span></span>
-                    <input type="text" name="Y5" id="Y5" style="margin-left: 10px;" oninput="calculateValues()" />
+                    <input type="text" name="Y5" id="Y5" style="margin-left: 10px;" oninput="YTextBoxClick()" />
                 </div>
                 <div style="display: flex; align-items: center;">
                     <span></span>
-                    <input type="text" name="Y6" id="Y6" style="margin-left: 10px;" oninput="calculateValues()" />
+                    <input type="text" name="Y6" id="Y6" style="margin-left: 10px;" oninput="YTextBoxClick()" />
                 </div>
                 <div style="display: flex; align-items: center;">
                     <span></span>
@@ -182,19 +182,19 @@
                 </div>
                 <div style="display: flex; align-items: center;">
                     <span></span>
-                    <input type="text" name="Y8" id="Y8" style="margin-left: 10px;" oninput="calculateValues()" />
+                    <input type="text" name="Y8" id="Y8" style="margin-left: 10px;" oninput="YTextBoxClick()" />
                 </div>
                 <div style="display: flex; align-items: center;">
                     <span></span>
-                    <input type="text" name="Y9" id="Y9" style="margin-left: 10px;" oninput="calculateValues()" />
+                    <input type="text" name="Y9" id="Y9" style="margin-left: 10px;" oninput="YTextBoxClick()" />
                 </div>
                 <div style="display: flex; align-items: center;">
                     <span></span>
-                    <input type="text" name="Y10" id="Y10" style="margin-left: 10px;" oninput="calculateValues()" />
+                    <input type="text" name="Y10" id="Y10" style="margin-left: 10px;" oninput="YTextBoxClick()" />
                 </div>
                 <div style="display: flex; align-items: center;">
                     <span></span>
-                    <input type="text" name="Y11" id="Y11" style="margin-left: 10px;" oninput="calculateValues()" />
+                    <input type="text" name="Y11" id="Y11" style="margin-left: 10px;" oninput="YTextBoxClick()" />
                 </div>
 
 
@@ -396,124 +396,87 @@
         });
         }
 
-    function calculateValues() {
-
-
-
+    function calculateValues() 
+    {
         const capacity = parseFloat(document.getElementById('capacity').value);
-
-        // Calculate X values and X average
 
         if (!isNaN(capacity) && capacity >= 0) {
 
             let sumX = 0; // To store the sum of all X values
-
-            // Loop to calculate and set X1 through X11 values
-
-            for (let i = 0; i <= 10; i++) {
+            for (let i = 0; i <= 10; i++) 
+            {
 
                 const xValue = ((capacity / 10) * i * 97.803/100).toFixed(2);
-
                 document.getElementById(`X${i + 1}`).value = xValue; // Set X1 to X11
-
                 sumX += parseFloat(xValue); // Add X value to the sumX
 
             }
 
-            // Calculate the average of the X values
-
             const averageX = (sumX / 11).toFixed(2); // Divide sum by 11 to get the average
-
             document.getElementById('xiAvg').value = averageX; // Set the average to the xiAvg text box
-
         } 
-        else {
+    }
 
-            // Clear the X values and xiAvg if input is invalid
-
-            for (let i = 1; i <= 11; i++) {
-
-                document.getElementById(`X${i}`).value = ""; // Clear X1 to X11
-
-            }
-
-            document.getElementById('xiAvg').value = ""; // Clear xiAvg
-
-        }
-
-        // Calculate Y values and Y average
-
+    function YTextBoxClick()
+    {
         let sumY = 0;
-
         let validYCount = 0;
 
-        for (let i = 1; i <= 11; i++) {
+        for (let i = 1; i <= 11; i++) 
+        {
 
             const yValue = parseFloat(document.getElementById(`Y${i}`).value);
 
-            if (!isNaN(yValue)) {
-
+            if (!isNaN(yValue))
+            {
                 sumY += yValue; // Add Y value to sumY
-
                 validYCount++; // Increment valid count for each valid Y value
 
+                var XiVal = parseFloat(document.getElementById(`X${i}`).value);
+                var XavVal = parseFloat(document.getElementById(`xiAvg`).value);
+                var YavVal = parseFloat(document.getElementById(`yiAvg`).value);
+
+                var XXSum =0.00;
+                var XYSum = 0.00; 
+                for (let j = 1; j <= 11; j++)
+                {
+                    var XjVal = parseFloat(document.getElementById(`X${j}`).value);
+
+                    var YjVal = parseFloat(document.getElementById(`Y${j}`).value);
+
+                    var YjAvVal = parseFloat(document.getElementById(`yiAvg`).value);
+
+                    if (!isNaN(((XjVal - XavVal) * (XjVal - XavVal)))) {
+                        XXSum += ((XjVal - XavVal) * (XjVal - XavVal));
+                    }
+
+                    if (!isNaN(((XjVal - XavVal) * (YjVal - YjAvVal)))) {
+                        XYSum += ((XjVal - XavVal) * (YjVal - YjAvVal));
+                    }
+                }
+
+                var expectedValue = (XYSum / XXSum) * XiVal;
+                var realError = (yValue - expectedValue) / yValue;
+                document.getElementById(`E${i}`).value = (realError * 100).toFixed(4); // Set Error1 to Error11
             }
 
-            // Set Y11 value to Sensitivity field
-
-            if (i === 11 && !isNaN(yValue)) {
-
+            if (i === 11 && !isNaN(yValue)) 
+            {
                 const yValueInNewtons = (yValue / 9780.03).toFixed(4); // Convert to Newtons and round to 2 decimal places
-
                 document.getElementById('sensitivity').value = yValueInNewtons; // Set Sensitivity to Y11 value in Newtons
-
             }
 
         }
-
-        // Calculate the average of valid Y values
 
         if (validYCount > 0) {
 
             const averageY = (sumY / validYCount).toFixed(2); // Calculate average
-
             document.getElementById('yiAvg').value = averageY; // Set the average to the yiAvg field
 
-        } else {
-
-            document.getElementById('yiAvg').value = ""; // Clear yiAvg if no valid Y values
-
-            document.getElementById('sensitivity').value = ""; // Clear Sensitivity if Y11 is invalid
-
         }
 
-        // Calculate Error in Percentage for each pair of X and Y values
-
-        for (let i = 1; i <= 11; i++) {
-
-            const xValue = parseFloat(document.getElementById(`X${i}`).value);
-
-            const yValue = parseFloat(document.getElementById(`Y${i}`).value);
-
-            if (!isNaN(xValue) && !isNaN(yValue) && xValue !== 0) {
-
-                // Calculate error percentage
-
-                const errorPercentage = (Math.abs(xValue - yValue) / xValue * 100).toFixed(2);
-
-                document.getElementById(`E${i}`).value = errorPercentage; // Set Error1 to Error11
-
-            } else {
-
-                document.getElementById(`E${i}`).value = ""; // Clear Error if inputs are invalid
-
-            }
-
-        }
 
     }
-
-
 
 
     $("#EditBtn").click(

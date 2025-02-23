@@ -18,7 +18,6 @@ namespace DisynetSoftware.Controllers
         public EntryDetailsController(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
-
         }
 
         public IActionResult Index()

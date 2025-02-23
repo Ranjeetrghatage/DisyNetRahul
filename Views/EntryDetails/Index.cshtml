@@ -1,0 +1,483 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+
+  Layout = null;
+    ViewData["Title"] = "Home Page";
+}
+
+<div style="text-align: center; margin-bottom: 30px;">
+    <h1>DISYNET SOFTWARE</h1>
+</div>
+
+<div style="text-align: left;margin-left: 10px;">
+
+    <h3>Entry Details</h3>
+</div>
+
+
+<form method="post" action="/EntryDetails/Submit">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+        <div>
+            <label for="jobOrder">Job Order:</label>
+            <input type="text" id="jobOrder" name="JobOrder" />
+        </div>
+        <div>
+            <label for="serialNumber">Serial Number:</label>
+            <input type="text" id="serialNumber" name="serialNumber" />
+        </div>
+        <div>
+            <label for="tempDrift">Temp Drift:</label>
+            <input type="text" id="tempDrift" name="TempDrift" />
+        </div>
+        <div>
+            <label for="initialUnbalance">Initial Unbalance:</label>
+            <input type="text" id="initialUnbalance" name="InitialUnbalance" />
+        </div>
+        <div>
+            <label for="customer">Customer:</label>
+            <input type="text" id="customer" name="Customer" />
+        </div>
+        <div>
+            <label for="modelNumber">Model Number:</label>
+            <input type="text" id="modelNumber" name="modelNo" />
+        </div>
+        <div>
+            <label for="capacity">Capacity:</label>
+            <input type="text" id="capacity" name="capacity" oninput="calculateValues()" />
+        </div>
+        <div>
+            <label for="excitationVoltage">Excitation Voltage:</label>
+            <input type="text" id="excitationVoltage" name="ExcitationVoltage" />
+        </div>
+        <div>
+            <label for="I/PResistance">I/P Resistance:</label>
+            <input type="text" id="inputResistance" name="inputResistance" />
+        </div>
+        <div>
+            <label for="O/PResistance">O/P Resistance:</label>
+            <input type="text" id="outputResistance" name="outputResistance" />
+        </div>
+        <div>
+            <label for="standardIndRef">Standard Ind Ref:</label>
+            <input type="text" id="indicatorReference" name="indicatorReference" />
+        </div>
+
+        
+        <div>
+            <label for="loadingDevice">Loading Device:</label>
+            <select id="loadingDevice" name="loadingDevice">
+                <option value="DEAD WEIGHT">DEAD WEIGHT</option>
+                <option value="UTM">UTM</option>
+                <option value="CTM">CTM </option>
+            </select>
+        </div>
+    </div>
+
+
+
+    <!-- Add similar blocks for Drift, Initial Unbalance, Customer, Model Number, etc. -->
+   
+    
+   
+    <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <!-- X Values -->
+        <div>
+            <h5 style="margin-left: 50px;">X Values</h5>
+
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <div style="display: flex; align-items: center;">
+                    <span>1</span>
+                    <input type="text" name="X1" id="X1" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span>2</span>
+                    <input type="text" name="X2" id="X2" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span>3</span>
+                    <input type="text" name="X3" id="X3" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span>4</span>
+                    <input type="text" name="X4" id="X4" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span>5</span>
+                    <input type="text" name="X5" id="X5" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span>6</span>
+                    <input type="text" name="X6" id="X6" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span>7</span>
+                    <input type="text" name="X7" id="X7" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span>8</span>
+                    <input type="text" name="X8" id="X8" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span>9</span>
+                    <input type="text" name="X9" id="X9" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span>10</span>
+                    <input type="text" name="X10" id="X10" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span>11</span>
+                    <input type="text" name="X11" id="X11" style="margin-left: 10px;" />
+                </div>
+            
+            <div style="display: flex; align-items: center;">
+                    <label for="xiAvg">Xavg:</label>
+                    <input type="text" id="xiAvg" name="xiAvg" style="margin-left: 10px;" />
+            </div>
+        </div>
+        </div>
+    
+
+
+        <!-- Repeat similar structure for Y Values and Error in Percentage -->
+    
+
+
+        <!-- Y Values -->
+        <div>
+            <h5 style="margin-left: 50px;">Y Values</h5>
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y1" id="Y1" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y2" id="Y2" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y3" id="Y3" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y4" id="Y4" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y5" id="Y5" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y6" id="Y6" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y7" id="Y7" style="margin-left: 10px;" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y8" id="Y8" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y9" id="Y9" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y10" id="Y10" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="Y11" id="Y11" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+
+
+                <div style="display: flex; align-items: center;">
+                    <label for="yiAvg">Yavg:</label>
+                    <input type="text" id="yiAvg" name="yiAvg" style="margin-left: 10px;" />
+                </div>
+        </div>
+
+        </div>
+    
+
+        <!-- Error in Percentage -->
+        <div>
+            <h5 style="margin-left: 50px;">Error in Percentage</h5>
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E1" id="E1" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E2" id="E2" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E3" id="E3" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E4" id="E4" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E5" id="E5" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E6" id="E6" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E7" id="E7" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E8" id="E8" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E9" id="E9" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E10" id="E10" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span></span>
+                    <input type="text" name="E11" id="E11" style="margin-left: 10px;" oninput="calculateValues()" />
+                </div>
+            
+            <div style="display: flex; align-items: center;">
+                <label for="Sensitivity">Sensitivity:</label>
+                    <input type="text" id="sensitivity" name="sensitivity" style="margin-left: 10px;"  />
+            </div>
+            </div>
+            </div>
+            
+        </div>
+
+    
+  
+    
+    
+
+   
+    
+    <div style="margin: 20px;">
+
+        <button type="submit">Submit</button>
+      
+        <button type="reset">Clear</button>
+        <button type="button" onclick="location.href='/EntryDetails/Reports'">Reports</button>
+        <button type="button" onclick="window.close()">Close</button>
+        <button type="button" id="EditBtn" class="btn btn-primary">Edit</button>
+
+        
+       
+
+    </div>
+</form>
+<!-- Form for Submit -->
+
+<hr />
+
+<!-- Section to Display Fetched Data -->
+@if (Model != null)
+{
+    <h3>Fetched Data</h3>
+    <p>Serial Number: @Model.SerialNumber</p>
+    <p>Model Number: @Model.ModelNo</p>
+    <p>Capacity: @Model.Capacity</p>
+    <p>Input Resistance: @Model.InputResistance</p>
+    <p>Output Resistance: @Model.OutputResistance</p>
+    <p>Excitation Voltage: @Model.ExcitationVoltage</p>
+    <p>Loading Device: @Model.LoadingDevice</p>
+}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<script>
+    document.getElementById('serialNumber').addEventListener('input', (e) => {
+        SearchData(e.target.value);
+    });
+
+    function SearchData(searchinput) {
+        $.ajax({
+            url: "/EntryDetails/OnTextChanged",
+            type: "Post",
+            dataType: 'json',
+            data: { SearchText: searchinput },
+            success: function (result) {
+                // Log the result to the console to verify data
+                console.log(result);
+
+                // If no data is returned
+                if (result === null) {
+                    alert("No data found for the provided serial number.");
+                    return;
+                }
+
+                // Update the DOM with the fetched data using val() for input elements
+                $('#serialNumber').val(result.serialNumber || "N/A");
+                $('#modelNumber').val(result.modelNo || "N/A");
+                $('#capacity').val(result.capacity || "N/A");
+                $('#inputResistance').val(result.inputResistance || "N/A");
+                $('#outputResistance').val(result.outputResistance || "N/A");
+                $('#excitationVoltage').val(result.excitationVoltage || "N/A");
+                $('#loadingDevice').val(result.loadingDevice || "N/A");
+                $('#tempDrift').val(result.tempDrift || "N/A");
+                $('#initialUnbalance').val(result.initialUnbalance || "N/A");
+                $('#jobOrder').val(result.jobOrder || "N/A");
+                $('#customer').val(result.customer || "N/A");
+                $('#indicatorReference').val(result.indicatorReference || "N/A");
+                $('#sensitivity').val(result.sensitivity || "N/A");
+                
+               $('#X1').val(result.x1 !== null ? result.x1.toFixed(2) : "N/A");
+
+               // $('#X1').val(result.x1 || "N/A");
+                $('#X2').val(result.x2 || "N/A");
+                $('#X3').val(result.x3 || "N/A");
+                $('#X4').val(result.x4 || "N/A");
+                $('#X5').val(result.x5 || "N/A");
+                $('#X6').val(result.x6 || "N/A");
+                $('#X7').val(result.x7 || "N/A");
+                $('#X8').val(result.x8 || "N/A");
+                $('#X9').val(result.x9 || "N/A");
+                $('#X10').val(result.x10 || "N/A");
+                $('#X11').val(result.x11 || "N/A");
+
+                $('#Y1').val(result.y1 || "N/A");
+                $('#Y2').val(result.y2 || "N/A");
+                $('#Y3').val(result.y3 || "N/A");
+                $('#Y4').val(result.y4 || "N/A");
+                $('#Y5').val(result.y5 || "N/A");
+                $('#Y6').val(result.y6 || "N/A");
+                $('#Y7').val(result.y7 || "N/A");
+                $('#Y8').val(result.y8 || "N/A");
+                $('#Y9').val(result.y9 || "N/A");
+                $('#Y10').val(result.y10 || "N/A");
+                $('#Y11').val(result.y11 || "N/A");
+                $('#E1').val(result.e1 !== null ? result.e1.toFixed(2) : "N/A");
+
+               // $('#E1').val(result.e1 || "N/A");
+                $('#E2').val(result.e2 || "N/A");
+                $('#E3').val(result.e3 || "N/A");
+                $('#E4').val(result.e4 || "N/A");
+                $('#E5').val(result.e5 || "N/A");
+                $('#E6').val(result.e6 || "N/A");
+                $('#E7').val(result.e7 || "N/A");
+                $('#E8').val(result.e8 || "N/A");
+                $('#E9').val(result.e9 || "N/A");
+                $('#E10').val(result.e10 || "N/A");
+                $('#E11').val(result.e11 || "N/A");
+
+                // Repeat for other X, Y, Error fields
+
+                // Update Xavg, Yavg, etc.
+
+                $('#xiAvg').val(result.xiAvg || "N/A");
+                $('#yiAvg').val(result.yiAvg || "N/A");
+            },
+            error: function (xhr, status, error) {
+                alert("Error occurred while fetching data.");
+            }
+        });
+        }
+       
+ 
+    
+    
+    
+    $("#EditBtn").click(function () {
+        var model = {
+            ObjectType: $("#objectType").val(),
+            ObjectName: $("#objectName").val(),
+            ErrorDescription: $("#errorDescription").val(),
+            SerialNumber: $("#serialNumber").val(),
+            ModelNo: $("#modelNo").val(),
+            Capacity: $("#capacity").val(),
+            InputResistance: $("#inputResistance").val(),
+            OutputResistance: $("#outputResistance").val(),
+            ExcitationVoltage: $("#excitationVoltage").val(),
+            InitialUnbalance: $("#initialUnbalance").val(),
+            LoadingDevice: $("#loadingDevice").val(),
+            Sensitivity: $("#sensitivity").val(),
+            IndicatorReference: $("#indicatorReference").val(),
+            MaxNonlinearity: $("#maxNonlinearity").val(),
+            XiAvg: $("#xiAvg").val(),
+            YiAvg: $("#yiAvg").val(),
+            RealError: $("#realError").val(),
+            Date: $("#date").val(),
+            Time: $("#time").val(),
+            BlankNo: $("#blankNo").val(),
+            Tonnes: $("#tonnes").val(),
+            SensorRange: $("#sensorRange").val(),
+            Remark: $("#remark").val(),
+            JobOrder: $("#jobOrder").val(),
+            Customer: $("#customer").val(),
+            VerifiedBy: $("#verifiedBy").val(),
+            TestedBy: $("#testedBy").val(),
+            Division: $("#division").val(),
+            TempDrift: $("#tempDrift").val(),
+            E1: $("#E1").val(),
+            E2: $("#E2").val(),
+            E3: $("#E3").val(),
+            E4: $("#E4").val(),
+            E5: $("#E5").val(),
+            E6: $("#E6").val(),
+            E7: $("#E7").val(),
+            E8: $("#E8").val(),
+            E9: $("#E9").val(),
+            E10: $("#E10").val(),
+            E11: $("#E11").val(),
+            X1: $("#X1").val(),
+            X2: $("#X2").val(),
+            X3: $("#X3").val(),
+            X4: $("#X4").val(),
+            X5: $("#X5").val(),
+            X6: $("#X6").val(),
+            X7: $("#X7").val(),
+            X8: $("#X8").val(),
+            X9: $("#X9").val(),
+            X10: $("#X10").val(),
+            X11: $("#X11").val(),
+            Y1: $("#Y1").val(),
+            Y2: $("#Y2").val(),
+            Y3: $("#Y3").val(),
+            Y4: $("#Y4").val(),
+            Y5: $("#Y5").val(),
+            Y6: $("#Y6").val(),
+            Y7: $("#Y7").val(),
+            Y8: $("#Y8").val(),
+            Y9: $("#Y9").val(),
+            Y10: $("#Y10").val(),
+            Y11: $("#Y11").val()
+        };
+
+        $.ajax({
+            url: "/EntryDetails/Edit",
+            type: "POST",
+            dataType: 'json',
+           
+            data: { model: model }
+            success: function (response) {
+                alert("Update successful!");
+                window.location.href = "/EntryDetails/Index";
+            },
+            error: function (xhr, status, error) {
+                alert("Error: " + error);
+            }
+        });
+    });
+  
+
+
+</script>

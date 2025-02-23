@@ -1,0 +1,16 @@
+﻿@{
+    Layout = null;  // Or use your shared layout
+    ViewData["Title"] = "Search and Edit Record";
+}
+
+<h2>Search Record to Edit</h2>
+
+<form method="get" action="/EntryDetails/Edit">
+    <div>
+        <label for="serialNumber">Enter Serial Number:</label>
+        <input type="text" id="serialNumber" name="serialNumber" required />
+    </div>
+    <div style="margin-top:10px;">
+        <button type="submit">Load Record for Edit</button>
+    </div>
+</form>

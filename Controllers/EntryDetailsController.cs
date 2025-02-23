@@ -253,9 +253,9 @@ namespace DisynetSoftware.Controllers
 
         public IActionResult Edit(DisynetDataModel model)
         {
-            if (model == null || !ModelState.IsValid)
+            if (model == null)
             {
-                return BadRequest("Invalid data submitted.");
+                return Json("Invalid data submitted.");
             }
 
             try
@@ -403,11 +403,11 @@ namespace DisynetSoftware.Controllers
                         command.ExecuteNonQuery();
                     }
                 }
-                return RedirectToAction("Index");
+                return Json("Index");
             }
             catch (Exception ex)
             {
-                return View("Error", ex);
+                return View("Error");
             }
         }
         

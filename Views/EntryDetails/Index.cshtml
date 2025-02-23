@@ -412,7 +412,7 @@
 
             for (let i = 0; i <= 10; i++) {
 
-                const xValue = ((capacity / 10) * i * 9.8).toFixed(2);
+                const xValue = ((capacity / 10) * i * 97.803/100).toFixed(2);
 
                 document.getElementById(`X${i + 1}`).value = xValue; // Set X1 to X11
 
@@ -426,7 +426,8 @@
 
             document.getElementById('xiAvg').value = averageX; // Set the average to the xiAvg text box
 
-        } else {
+        } 
+        else {
 
             // Clear the X values and xiAvg if input is invalid
 

@@ -135,14 +135,11 @@ namespace DisynetSoftware.Controllers
         [HttpGet]
         [HttpPost]
 
-
-
+        [HttpGet]
         public IActionResult OnTextChanged(string SearchText)
         {
             return FetchData(SearchText);
-
         }
-
 
 
 

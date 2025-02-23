@@ -18,7 +18,7 @@
 </div>
 
 
-<form method="post" action="/EntryDetails/Submit">
+<form method="post">
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
         <div>
             <label for="jobOrder">Job Order:</label>
@@ -305,15 +305,28 @@
 
 
 <script>
-    document.getElementById('serialNumber').addEventListener('input', (e) => {
+    // document.getElementById("serialNumber").addEventListener("input", function () {
+    //     let searchText = this.value;
+
+    //     fetch(`/EntryDetails/OnTextChanged?SearchText=${encodeURIComponent(searchText)}`)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log("Fetched Data: ", data);
+    //         })
+    //         .catch(error => console.error("Error:", error));
+    // });
+
+
+
+
+    document.getElementById("serialNumber").addEventListener('input', (e) => {
         SearchData(e.target.value);
     });
 
     function SearchData(searchinput) {
         $.ajax({
             url: "/EntryDetails/OnTextChanged",
-            type: "Post",
-            dataType: 'json',
+            type: "POST",
             data: { SearchText: searchinput },
             success: function (result) {
                 // Log the result to the console to verify data
@@ -391,12 +404,128 @@
             }
         });
         }
-       
- 
-    
-    
-    
-    $("#EditBtn").click(function () {
+
+    function calculateValues() {
+
+
+
+        const capacity = parseFloat(document.getElementById('capacity').value);
+
+        // Calculate X values and X average
+
+        if (!isNaN(capacity) && capacity >= 0) {
+
+            let sumX = 0; // To store the sum of all X values
+
+            // Loop to calculate and set X1 through X11 values
+
+            for (let i = 0; i <= 10; i++) {
+
+                const xValue = ((capacity / 10) * i * 9.8).toFixed(2);
+
+                document.getElementById(`X${i + 1}`).value = xValue; // Set X1 to X11
+
+                sumX += parseFloat(xValue); // Add X value to the sumX
+
+            }
+
+            // Calculate the average of the X values
+
+            const averageX = (sumX / 11).toFixed(2); // Divide sum by 11 to get the average
+
+            document.getElementById('xiAvg').value = averageX; // Set the average to the xiAvg text box
+
+        } else {
+
+            // Clear the X values and xiAvg if input is invalid
+
+            for (let i = 1; i <= 11; i++) {
+
+                document.getElementById(`X${i}`).value = ""; // Clear X1 to X11
+
+            }
+
+            document.getElementById('xiAvg').value = ""; // Clear xiAvg
+
+        }
+
+        // Calculate Y values and Y average
+
+        let sumY = 0;
+
+        let validYCount = 0;
+
+        for (let i = 1; i <= 11; i++) {
+
+            const yValue = parseFloat(document.getElementById(`Y${i}`).value);
+
+            if (!isNaN(yValue)) {
+
+                sumY += yValue; // Add Y value to sumY
+
+                validYCount++; // Increment valid count for each valid Y value
+
+            }
+
+            // Set Y11 value to Sensitivity field
+
+            if (i === 11 && !isNaN(yValue)) {
+
+                const yValueInNewtons = (yValue / 9780.03).toFixed(4); // Convert to Newtons and round to 2 decimal places
+
+                document.getElementById('sensitivity').value = yValueInNewtons; // Set Sensitivity to Y11 value in Newtons
+
+            }
+
+        }
+
+        // Calculate the average of valid Y values
+
+        if (validYCount > 0) {
+
+            const averageY = (sumY / validYCount).toFixed(2); // Calculate average
+
+            document.getElementById('yiAvg').value = averageY; // Set the average to the yiAvg field
+
+        } else {
+
+            document.getElementById('yiAvg').value = ""; // Clear yiAvg if no valid Y values
+
+            document.getElementById('sensitivity').value = ""; // Clear Sensitivity if Y11 is invalid
+
+        }
+
+        // Calculate Error in Percentage for each pair of X and Y values
+
+        for (let i = 1; i <= 11; i++) {
+
+            const xValue = parseFloat(document.getElementById(`X${i}`).value);
+
+            const yValue = parseFloat(document.getElementById(`Y${i}`).value);
+
+            if (!isNaN(xValue) && !isNaN(yValue) && xValue !== 0) {
+
+                // Calculate error percentage
+
+                const errorPercentage = (Math.abs(xValue - yValue) / xValue * 100).toFixed(2);
+
+                document.getElementById(`E${i}`).value = errorPercentage; // Set Error1 to Error11
+
+            } else {
+
+                document.getElementById(`E${i}`).value = ""; // Clear Error if inputs are invalid
+
+            }
+
+        }
+
+    }
+
+
+
+
+    $("#EditBtn").click(
+        function () {
         var model = {
             ObjectType: $("#objectType").val(),
             ObjectName: $("#objectName").val(),
@@ -459,7 +588,7 @@
             Y8: $("#Y8").val(),
             Y9: $("#Y9").val(),
             Y10: $("#Y10").val(),
-            Y11: $("#Y11").val()
+            Y11: $("#Y11").val(),
         };
 
         $.ajax({
@@ -467,7 +596,7 @@
             type: "POST",
             dataType: 'json',
            
-            data: { model: model }
+            data: { model: model },
             success: function (response) {
                 alert("Update successful!");
                 window.location.href = "/EntryDetails/Index";
